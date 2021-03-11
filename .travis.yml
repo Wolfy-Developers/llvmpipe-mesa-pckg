@@ -1,0 +1,11 @@
+language: bash
+os: linux
+dist: xenial
+arch: arm
+before_install:
+  - sudo apt-get -y install llvm
+addons:
+  apt:
+    update: true
+script:
+    - bash ./compile_mesa.sh
