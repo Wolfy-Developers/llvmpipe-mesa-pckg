@@ -7,7 +7,7 @@ OS_VER=$(uname -r)
 TMP_FOLDER="${HOME}/mesa_tmp_build"
 
 # Package dependencies for the host
-APT_HOST_DEPENDENCIES="llvm* build-essential uuid-dev libssl-dev libreadline-dev zlib1g-dev libsqlite3-dev  liblzma-dev libncurses5-dev libbz2-dev libgdbm-dev make wget libgdbm-dev libnss3-dev libffi-dev bzip2 libc6-dev libncursesw5-dev libdb5.3-dev libexpat1-dev git cmake libgtk-3-dev curl freeglut3 freeglut3-dev"
+APT_HOST_DEPENDENCIES="llvm* build-essential uuid-dev libssl-dev libreadline-dev zlib1g-dev libsqlite3-dev  liblzma-dev libncurses5-dev libbz2-dev libgdbm-dev make wget libgdbm-dev libnss3-dev libffi-dev bzip2 libc6-dev libncursesw5-dev libdb5.3-dev libexpat1-dev git cmake libgtk-3-dev curl freeglut3 freeglut3-dev debhelper dh-make"
 PIP_HOST_DEPENDENCIES="flex bison mako meson ninja make"
 
 function show_welcome_message()
@@ -51,9 +51,9 @@ function build_python_src()
 
 function install_pip3_and_depends()
 {
-    export PATH=/opt/python-3.7.10/bin:$PATH
+    # export PATH=/opt/python-3.7.10/bin:$PATH
     curl https://bootstrap.pypa.io/get-pip.py -o ${TMP_FOLDER}/get-pip.py
-    python3.7 ${TMP_FOLDER}/get-pip.py
+    python3 ${TMP_FOLDER}/get-pip.py
 
     python3 -m pip install ${PIP_HOST_DEPENDENCIES}
 }
@@ -98,8 +98,8 @@ function build_mesa_src()
         -D vulkan-drivers= \
         -D osmesa=classic \
         build/;
-    ninja -C build/
-    sudo ninja -C build/ install
+    # ninja -C build/
+    # sudo ninja -C build/ install
 }
 
 
@@ -113,14 +113,16 @@ function space()
 
 function main()
 {
+    # TODO: first install sudo apt-get install software-properties-common wget
+    # and enable universal repositories: sudo add-apt-repository universe
     mkdir ${TMP_FOLDER}
     show_welcome_message
     space
     show_system_info
     space "Stage 0: install depends"
     sudo apt install -qq -y ${APT_HOST_DEPENDENCIES}
-    space "Stage 1: build and install Python 3.7.10"
-    build_python_src
+#     space "Stage 1: build and install Python 3.7.10"
+#     build_python_src
     space "Stage 2: install pip3 and depends"
     install_pip3_and_depends 
     space "Stage 3: cloning Mesa 3D Repository"
