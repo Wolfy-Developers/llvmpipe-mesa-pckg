@@ -7,7 +7,8 @@ OS_VER=$(uname -r)
 TMP_FOLDER="${HOME}/mesa_tmp_build"
 
 # Package dependencies for the host
-APT_HOST_DEPENDENCIES="llvm* build-essential uuid-dev libssl-dev libreadline-dev zlib1g-dev libsqlite3-dev  liblzma-dev libncurses5-dev libbz2-dev libgdbm-dev make wget libgdbm-dev libnss3-dev libffi-dev bzip2 libc6-dev libncursesw5-dev libdb5.3-dev libexpat1-dev git cmake libgtk-3-dev curl freeglut3 freeglut3-dev debhelper dh-make"
+POST_HOST_DEPENDENCIES="software-properties-common wget"
+APT_HOST_DEPENDENCIES="build-essential uuid-dev libssl-dev libreadline-dev zlib1g-dev libsqlite3-dev  liblzma-dev libncurses5-dev libbz2-dev libgdbm-dev make libgdbm-dev libnss3-dev libffi-dev bzip2 libc6-dev libncursesw5-dev libdb5.3-dev libexpat1-dev git cmake libgtk-3-dev curl freeglut3 freeglut3-dev debhelper dh-make"
 PIP_HOST_DEPENDENCIES="flex bison mako meson ninja make"
 
 function show_welcome_message()
@@ -32,6 +33,7 @@ function clone_mesa_repo()
 
     echo "Cloning Mesa 3D repository, version: ${mesa_version}"
     mkdir ${TMP_FOLDER}/mesa_src/
+    git config --global http.sslverify false
     git clone --depth=1 --branch=mesa-${mesa_version} https://gitlab.freedesktop.org/mesa/mesa.git ${TMP_FOLDER}/mesa_src/${mesa_version}
 }
 
@@ -113,13 +115,14 @@ function space()
 
 function main()
 {
-    # TODO: first install sudo apt-get install software-properties-common wget
-    # and enable universal repositories: sudo add-apt-repository universe
     mkdir ${TMP_FOLDER}
+    export $PATH
     show_welcome_message
     space
     show_system_info
     space "Stage 0: install depends"
+    sudo apt install -qq -y ${POST_HOST_DEPENDENCIES}
+    sudo add-apt-repository universe
     sudo apt install -qq -y ${APT_HOST_DEPENDENCIES}
 #     space "Stage 1: build and install Python 3.7.10"
 #     build_python_src
