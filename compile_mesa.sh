@@ -57,7 +57,8 @@ function install_pip3_and_depends()
     curl https://bootstrap.pypa.io/get-pip.py -o ${TMP_FOLDER}/get-pip.py
     python3 ${TMP_FOLDER}/get-pip.py
 
-    python3 -m pip install ${PIP_HOST_DEPENDENCIES}
+    python3 -m pip install ${PIP_HOST_DEPENDENCIES} --user
+    export PATH=/root/.local/bin:$PATH
 }
 
 function build_mesa_src()
@@ -100,6 +101,7 @@ function build_mesa_src()
         -D vulkan-drivers= \
         -D osmesa=classic \
         build/;
+    # cd build && ninja -v -j 30
     # ninja -C build/
     # sudo ninja -C build/ install
 }
@@ -116,7 +118,7 @@ function space()
 function main()
 {
     mkdir ${TMP_FOLDER}
-    export $PATH
+    export PATH
     show_welcome_message
     space
     show_system_info
