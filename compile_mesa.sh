@@ -7,7 +7,7 @@ OS_VER=$(uname -r)
 TMP_FOLDER="${HOME}/mesa_tmp_build"
 
 # Package dependencies for the host
-APT_HOST_DEPENDENCIES="llvm* build-essential uuid-dev libssl-dev libreadline-dev zlib1g-dev libsqlite3-dev  liblzma-dev libncurses5-dev libbz2-dev libgdbm-dev make wget libgdbm-dev libnss3-dev libffi-dev bzip2 libc6-dev libncursesw5-dev libdb5.3-dev libexpat1-dev git cmake libgtk-3-dev curl freeglut3 freeglut3-dev debhelper dh-make"
+APT_HOST_DEPENDENCIES="build-essential uuid-dev libssl-dev libreadline-dev zlib1g-dev libsqlite3-dev  liblzma-dev libncurses5-dev libbz2-dev libgdbm-dev make wget libgdbm-dev libnss3-dev libffi-dev bzip2 libc6-dev libncursesw5-dev libdb5.3-dev libexpat1-dev git cmake libgtk-3-dev curl freeglut3 freeglut3-dev debhelper dh-make"
 PIP_HOST_DEPENDENCIES="flex bison mako meson ninja make"
 
 function show_welcome_message()

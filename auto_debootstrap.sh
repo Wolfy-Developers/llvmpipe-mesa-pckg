@@ -2,10 +2,10 @@
 # Based on a test script from avsm/ocaml repo https://github.com/avsm/ocaml
 
 CHROOT_DIR=$HOME/arm-chroot
-# MIRROR=http://ports.ubuntu.com/ubuntu-ports
-MIRROR=http://ru.archive.ubuntu.com/ubuntu
-VERSION=bionic
-CHROOT_ARCH=i386
+MIRROR=http://ports.ubuntu.com/ubuntu-ports
+# MIRROR=http://ru.archive.ubuntu.com/ubuntu
+VERSION=focal
+CHROOT_ARCH=armhf
 
 # Debian package dependencies for the host
 HOST_DEPENDENCIES="debootstrap qemu-user-static binfmt-support sbuild"
